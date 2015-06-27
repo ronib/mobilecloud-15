@@ -2,9 +2,7 @@ package vandy.mooc.operations;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
-
 import retrofit.RestAdapter;
-import retrofit.RestAdapter.LogLevel;
 import vandy.mooc.activities.AcronymActivity;
 import vandy.mooc.provider.cache.ContentProviderTimeoutCache;
 import vandy.mooc.retrofit.AcronymData;
@@ -87,10 +85,19 @@ public class AcronymOps
                 new ContentProviderTimeoutCache
                 (activity.getApplicationContext());
 
-            // Create a proxy to access the Acronym web service.  TODO
+            // Create a proxy to access the Acronym web service.  
             // -- you fill in here, replacing "null" with the
             // appropriate initialization of the proxy.
-            mAcronymWebServiceProxy = null;
+            
+            // Build the RetroFit RestAdapter, which is used to create
+    	    // the RetroFit service instance, and then use it to build
+    	    // the AcronymServiceProxy.
+            mAcronymWebServiceProxy = new RestAdapter.Builder()
+                    .setEndpoint(AcronymWebServiceProxy.ENDPOINT)
+                    .build()
+                    .create(AcronymWebServiceProxy.class);
+    	    
+    	    
         } else
             // Update the results on the UI.
             updateResultsDisplay();
@@ -131,7 +138,6 @@ public class AcronymOps
             // Try to get the results from the cache.
             List<AcronymExpansion> longForms =
                 mAcronymCache.get(acronym);
-
             // If data is in cache return it.
             if (longForms != null
                 && !longForms.isEmpty()) {
@@ -155,7 +161,8 @@ public class AcronymOps
                 // two-way Retrofit RPC call.
                 // TODO -- you fill in here, replacying "null" with a
                 // call to the appropriate method on the proxy.
-                AcronymData result = null;
+                // "The data returned is a List with only one object" IFF the acronym exists - code accordingly ;)
+                AcronymData result = mAcronymWebServiceProxy.getAcronymResults(mAcronymWebServiceProxy.SHORT_FORM_QUERY_PARAMETER).get(0);
                         
                 // Get the "long forms" of the acronym expansion.
                 longForms = result.getLfs();

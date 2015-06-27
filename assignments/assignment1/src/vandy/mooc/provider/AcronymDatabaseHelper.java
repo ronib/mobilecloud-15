@@ -58,6 +58,7 @@ public class AcronymDatabaseHelper extends SQLiteOpenHelper {
         
         // Create the table.
         db.execSQL(SQL_CREATE_ACRONYM_TABLE);
+        System.out.println("11111111111111111");
     }
 
     /**

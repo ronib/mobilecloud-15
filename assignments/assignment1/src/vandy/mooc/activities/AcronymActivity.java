@@ -46,17 +46,10 @@ public class AcronymActivity extends GenericActivity<AcronymOps> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Get references to the UI components.
+
         setContentView(R.layout.main_activity);
-
-        // Store the EditText that holds the urls entered by the user
-        // (if any).
         mEditText = (EditText) findViewById(R.id.editText1);
-
-        // Store the ListView for displaying the results entered.
         mListView = (ListView) findViewById(R.id.listView1);
-        
-        // Create a local instance of our custom Adapter for our
-        // ListView.
         mAdapter = new AcronymDataArrayAdapter(this);
 
         // Set the adapter to the ListView.
