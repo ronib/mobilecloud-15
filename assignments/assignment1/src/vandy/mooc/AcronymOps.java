@@ -1,7 +1,11 @@
-package vandy.mooc.operations;
+package vandy.mooc;
+
+import android.app.Activity;
+import android.util.Log;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+
 import retrofit.RestAdapter;
 import vandy.mooc.activities.AcronymActivity;
 import vandy.mooc.provider.cache.ContentProviderTimeoutCache;
@@ -11,8 +15,6 @@ import vandy.mooc.retrofit.AcronymWebServiceProxy;
 import vandy.mooc.utils.ConfigurableOps;
 import vandy.mooc.utils.GenericAsyncTask;
 import vandy.mooc.utils.GenericAsyncTaskOps;
-import android.app.Activity;
-import android.util.Log;
 
 /**
  * This class implements all the acronym-related operations defined in
@@ -85,19 +87,13 @@ public class AcronymOps
                 new ContentProviderTimeoutCache
                 (activity.getApplicationContext());
 
-            // Create a proxy to access the Acronym web service.  
+            // Create a proxy to access the Acronym web service.  TODO
             // -- you fill in here, replacing "null" with the
             // appropriate initialization of the proxy.
-            
-            // Build the RetroFit RestAdapter, which is used to create
-    	    // the RetroFit service instance, and then use it to build
-    	    // the AcronymServiceProxy.
-            mAcronymWebServiceProxy = new RestAdapter.Builder()
-                    .setEndpoint(AcronymWebServiceProxy.ENDPOINT)
+            mAcronymWebServiceProxy = new RestAdapter.Builder().setEndpoint(AcronymWebServiceProxy.ENDPOINT)
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
                     .build()
                     .create(AcronymWebServiceProxy.class);
-    	    
-    	    
         } else
             // Update the results on the UI.
             updateResultsDisplay();
@@ -138,6 +134,7 @@ public class AcronymOps
             // Try to get the results from the cache.
             List<AcronymExpansion> longForms =
                 mAcronymCache.get(acronym);
+
             // If data is in cache return it.
             if (longForms != null
                 && !longForms.isEmpty()) {
@@ -161,8 +158,7 @@ public class AcronymOps
                 // two-way Retrofit RPC call.
                 // TODO -- you fill in here, replacying "null" with a
                 // call to the appropriate method on the proxy.
-                // "The data returned is a List with only one object" IFF the acronym exists - code accordingly ;)
-                AcronymData result = mAcronymWebServiceProxy.getAcronymResults(acronym).get(0);
+                AcronymData result = mAcronymWebServiceProxy.getAcronymResults(mAcronymWebServiceProxy.SHORT_FORM_QUERY_PARAMETER).get(0);
                         
                 // Get the "long forms" of the acronym expansion.
                 longForms = result.getLfs();

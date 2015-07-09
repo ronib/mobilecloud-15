@@ -7,7 +7,7 @@
 	<classpathentry kind="lib" path="libs/gson-2.2.4.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="C:/Users/Shironi/android-sdks/platforms/android-22/android.jar">
+	<classpathentry kind="lib" path="D:/android-sdk_r24.0.2-windows/android-sdk-windows/platforms/android-22/android.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="http://developer.android.com/reference/"/>
 		</attributes>
